@@ -3,7 +3,7 @@
 import requests
 import json
 
-# ✅ Dummy/mock PDF extraction for now (replace with real logic later)
+#  Dummy/mock PDF extraction for now (replace with real logic later)
 def extract_text(pdf_path):
     print(f"📄 (Mock) Extracting text from: {pdf_path}")
     return [
@@ -11,7 +11,7 @@ def extract_text(pdf_path):
         {"page_number": 2, "text": "MBLNR: 4507654321\nMJAHR: 2022"}
     ]
 
-# ✅ LLM-based field extractor
+#  LLM-based field extractor
 def with_llm(page_text):
     prompt = (
         "You are a strict JSON extractor.\n"
@@ -34,11 +34,11 @@ def with_llm(page_text):
             timeout=15
         )
     except requests.RequestException as e:
-        print("❌ LLM request failed:", e)
+        print(" LLM request failed:", e)
         return {}
 
     if response.status_code != 200:
-        print(f"❌ LLM call failed with status code: {response.status_code}")
+        print(f" LLM call failed with status code: {response.status_code}")
         return {}
 
     content = response.json().get("message", {}).get("content", "")
@@ -53,6 +53,7 @@ def with_llm(page_text):
             "MJAHR": data.get("MJAHR")
         }
     except Exception as e:
-        print("❌ Failed to parse JSON:", e)
-        print("↩️ Raw response:", content)
+        print(" Failed to parse JSON:", e)
+        print(" Raw response:", content)
         return {}
+
